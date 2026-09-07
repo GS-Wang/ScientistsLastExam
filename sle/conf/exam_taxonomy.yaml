@@ -20,6 +20,7 @@ out_of_scope:
 optimization_analogue:
   engineering_design: engineering design under a frozen simulator (same form as Frontier-Eng; no task is shared with it)
   combinatorial: open-record construction with an executable mathematical verifier
+  fixed_combinatorial: finite combinatorial optimization against a proved attainable bound on a fixed public instance
   molecular_design: molecular or macromolecular design under a frozen scientific oracle
   certificate_bound: >-
     the product is a verifiable argument rather than an object, and the score is the strength
@@ -35,6 +36,7 @@ discovery_kind:
 tasks:
   Ecology/OccupancyDetectionDesign: {form: discovery, kind: evidence, note: latent_occupancy_and_repeat_detection_not_population_history_or_climate_fingerprinting}
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}
+  Physics/F6SpinGlassGroundState: {form: optimization, analogue: fixed_combinatorial, note: fixed_capped_planted_instance_not_open_record}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}

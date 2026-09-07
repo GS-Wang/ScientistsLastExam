@@ -1,0 +1,14 @@
+domain: Physics
+task: F6SpinGlassGroundState
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical_fixed_ising_energy
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 600
+science_metric: exact_energy_progress_from_all_plus_one_baseline_to_the_attainable_f6_cube_lower_bound_with_gap_and_ground_state_hit_reported_separately
+reference_baseline: all_plus_one_energy_zero
+reference_sota: exact_attainable_cube_lower_bound_minus_2592_verified_by_a_separately_held_private_witness
+citation: "Hamze et al., Physical Review E 97, 043303 (2018), DOI 10.1103/PhysRevE.97.043303, arXiv:1711.04083"
+claim_boundary: "Fixed public candidate instance only; not an open record, anti-contamination guarantee, formal calibration, external review, or general hardness result."
