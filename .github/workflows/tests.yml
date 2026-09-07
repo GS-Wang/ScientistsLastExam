@@ -28,7 +28,7 @@ jobs:
       - name: Sandbox tools
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q bubblewrap util-linux python3-pip
+          sudo apt-get install -y -q bubblewrap util-linux python3-pip python3-venv
           bwrap --version && flock --version
           # Bubblewrap needs unprivileged user namespaces; make it explicit if the runner ever
           # stops allowing them.
@@ -38,9 +38,33 @@ jobs:
         run: |
           /usr/bin/python3 --version
           sudo /usr/bin/python3 -m pip install --upgrade pip
-          sudo /usr/bin/python3 -m pip install "numpy==1.24.4" "scipy==1.10.1" "sympy==1.14.0" pyyaml pytest
+          sudo /usr/bin/python3 -m pip install "numpy==1.24.4" "scipy==1.10.1" pyyaml pytest
           # The sandbox resolves site-packages for the interpreter it execs; prove they are there.
-          /usr/bin/python3 -c "import numpy, scipy, sympy, yaml; print(numpy.__file__)"
+          /usr/bin/python3 -c "import numpy, scipy, yaml; print(numpy.__file__)"
+      - name: Independent algebra checks in a test-only environment
+        run: |
+          # The trusted parent needs SymPy for independent test calculations. Keep it outside
+          # /usr and the candidate package roots, so existing tasks retain their tool budgets.
+          /usr/bin/python3 -m venv --system-site-packages "$RUNNER_TEMP/sle-test-venv"
+          "$RUNNER_TEMP/sle-test-venv/bin/python" -m pip install "sympy==1.14.0"
+          "$RUNNER_TEMP/sle-test-venv/bin/python" -c 'import sympy; assert sympy.__version__ == "1.14.0"'
+          /usr/bin/python3 -c 'import importlib.util; assert importlib.util.find_spec("sympy") is None'
+          "$RUNNER_TEMP/sle-test-venv/bin/python" - <<'PY'
+          from pathlib import Path
+          from tempfile import TemporaryDirectory
+          from sle.secure_eval import CandidateProxy
+
+          with TemporaryDirectory() as directory:
+              candidate = Path(directory) / "dependency_probe.py"
+              candidate.write_text(
+                  "def inspect_environment():\n"
+                  "    import importlib.util\n"
+                  "    return {name: importlib.util.find_spec(name) is not None\n"
+                  "            for name in ('numpy', 'scipy', 'sympy')}\n"
+              )
+              with CandidateProxy(candidate, "inspect_environment", 30) as probe:
+                  assert probe() == {"numpy": True, "scipy": True, "sympy": False}
+          PY
       - name: Inventory and card audits
         run: |
           /usr/bin/python3 scripts/audit_tasks.py --output /tmp/certification.json
@@ -56,4 +80,4 @@ jobs:
         # the refresh is the maintainer's own step, and skipping it is the regression.
         env:
           SLE_REQUIRE_FROZEN_INVENTORY: ${{ github.ref == 'refs/heads/main' && '1' || '0' }}
-        run: /usr/bin/python3 -m pytest tests/ -q -p no:cacheprovider
+        run: '"$RUNNER_TEMP/sle-test-venv/bin/python" -m pytest tests/ -q -p no:cacheprovider'

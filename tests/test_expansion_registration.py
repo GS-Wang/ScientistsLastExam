@@ -1,4 +1,4 @@
-"""Finite Shannon and dephrasure resources remain explicit, isolated candidates."""
+"""Finite dephrasure resources remain explicit, isolated candidates."""
 from __future__ import annotations
 
 import importlib.util
@@ -14,7 +14,6 @@ from sle.registry import list_tasks
 
 
 EXPECTED_CANDIDATES = {
-    "Mathematics/ShannonCapacityConstruction": ("Mathematics", "build_code"),
     "QuantumFoundations/DephrasureCodeDesign": ("Physics", "design_code"),
 }
 

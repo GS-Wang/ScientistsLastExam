@@ -34,6 +34,9 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Mathematics/ChowlaCosineCertificate": "Chowla 余弦下界证书",
+    "QuantumFoundations/MutuallyUnbiasedBases6": "六维近似互无偏基",
+    "QuantumFoundations/DephrasureCodeDesign": "退相位擦除信道有限块码态设计",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
@@ -50,19 +53,19 @@ CHINESE_NAMES = {
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
+    "Ecology/OccupancyDetectionDesign": "生态占域与探测设计",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
+    "Geophysics/UPbConcordiaInference": "铀铅谐和图事件归因",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
-    "Mathematics/ChowlaCosineCertificate": "Chowla 余弦下界证书",
-    "Mathematics/ShannonCapacityConstruction": "七环五次强积独立集构造",
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
@@ -82,8 +85,7 @@ CHINESE_NAMES = {
     "Exoplanets/TransmissionSpectrumSpecies": "透射光谱分子判定",
     "DiscreteGeometry/SpherePackingCertificate": "球堆积上界证书",
     "QuantumFoundations/BellBoundCertificate": "贝尔不等式上界证书",
-    "QuantumFoundations/MutuallyUnbiasedBases6": "六维近似互无偏基",
-    "QuantumFoundations/DephrasureCodeDesign": "退相位擦除信道有限块码态设计",
+    "InformationTheory/ShannonCapacityCertificate": "奇圈香农容量双侧证书",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
     "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
     "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
@@ -124,6 +126,15 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Mathematics/ChowlaCosineCertificate": (
+        "选择有限个整数频率,并用有理平方模的完整 Laurent 恒等式证明余弦和在整条圆周上的全局下界",
+        "三个规模的精确证书进度取均值且 1 以上不截断;1 是公开的贪心 Sidon 构造而非全局最优,廉价局部搜索已到约 1.0074"),
+    "QuantumFoundations/MutuallyUnbiasedBases6": (
+        "在六维复空间构造四组尽量互无偏的测量基,用有界 Gaussian 整数射线表示并精确验证正交性与跃迁概率",
+        "精确 ASD 对固定 Raynal 有理重构归一化且不截断;公式可廉价达到 1,真正超越另由严谨代数区间旗标判定,本表示不覆盖精确 MUB 存在性"),
+    "QuantumFoundations/DephrasureCodeDesign": (
+        "为退相位擦除信道的三次或四次使用设计输入密度矩阵因子,提高每次使用的相干信息",
+        "四例相干信息相对单字母率和已重算公开见证包络的进度均值,不截断;另报超过包络 1e-9 bits/use 的量,不宣称全局纪录或渐近容量"),
     "Acoustics/RoomImpulseResponse": (
         "布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度",
         "清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移"),
@@ -172,6 +183,9 @@ CHINESE_BRIEFS = {
     "DynamicalSystems/ActiveLawDiscovery": (
         "自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程",
         "稀疏律恢复 + 密封轨迹外推;库不足时拒答"),
+    "Ecology/OccupancyDetectionDesign": (
+        "在漏检条件下分配站点复访与调查方法,恢复栖息地占域效应或拒绝不充分模型",
+        "效应方向、效应量与平均占域率;误发现、拒答、覆盖率和留出迁移分列"),
     "Electrochemistry/ElectrolyteConductivityDesign": (
         "在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次",
         "温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限"),
@@ -187,6 +201,9 @@ CHINESE_BRIEFS = {
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
+    "Geophysics/UPbConcordiaInference": (
+        "在分析预算内选择锆石域,由两套铀铅衰变比判断单一结晶或一次铅丢失历史;可分辨的多事件历史须拒答",
+        "事件类型 + 结晶与铅丢失年龄 + 证据血缘;误发现、拒答、覆盖率和留出迁移分列"),
     "Gravitation/PTAHellingsDowns": (
         "脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声",
         "四极 vs 单极判别与拒答;共同过程不等于引力波背景"),
@@ -205,12 +222,6 @@ CHINESE_BRIEFS = {
     "Mathematics/BlackBoxGroupIdentification": (
         "只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类",
         "目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识"),
-    "Mathematics/ChowlaCosineCertificate": (
-        "选择有限个整数频率,并用有理平方模的完整 Laurent 恒等式证明余弦和在整条圆周上的全局下界",
-        "三个规模的精确证书进度取均值且 1 以上不截断;1 是公开的贪心 Sidon 构造而非全局最优,廉价局部搜索已到约 1.0074"),
-    "Mathematics/ShannonCapacityConstruction": (
-        "在七环的固定五次强积中构造更大的独立集,提交七元字母表上的五位码字;不求完整 Shannon 容量",
-        "逐对精确验证环距离,按码字数从 243 词乘积基线到 367 词历史构造归一化且不截断;公开重放得 1,超出仅表示超过该见证"),
     "Mathematics/CapSet": (
         "在 Z_3^n 里构造更大的 cap set(无三点共线)",
         "对最好已知规模的平均进度;无上限"),
@@ -286,6 +297,10 @@ CHINESE_BRIEFS = {
         "1.0 是已发表的 Cohn-Elkies 数值界,而与之等强的精确有理证书似乎在任何维度都还没有人发表过。"
         "有理数精确验证,提交浮点判零:网格线性规划这个教科书方法会给出假界(16 阶时 8 维报 0.06237,"
         "低于 E8 格实际达到的 0.0625)。"),
+    "InformationTheory/ShannonCapacityCertificate": (
+        "为奇圈的香农容量给出一段可精确验证的区间:下界交一个强积幂里的零错码(任意两码字不得在每个坐标上都相等或相邻),上界交一份有理 Lovasz 矩阵与有理界,使 b*I - A 正定。"
+        "C7 的容量自 1956 年 Shannon 提出、1979 年 Lovasz 解决 C5 之后一直未知,下端在 2026 年 7 月一个月内被改进了三次,上端 theta 自 1979 年未动过。",
+        "四个奇圈(C7/C13/C19/C23)取均值,不设上限。零点不是引用而是随包发布的显式码集,oracle 用同一套独立性检验接受它;1.0 是 2026-09-06 时的已发表最好下界,四个都不是在本题允许的幂上达到的。有理数精确验证,提交浮点判零——数值特征值不是证明。"),
     "QuantumFoundations/BellBoundCertificate": (
         "为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,"
         "使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,"
@@ -293,12 +308,6 @@ CHINESE_BRIEFS = {
         "四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的"
         "对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,"
         "提交浮点数直接判零——数值 SDP 解不是证明。"),
-    "QuantumFoundations/MutuallyUnbiasedBases6": (
-        "在六维复空间构造四组尽量互无偏的测量基,用有界 Gaussian 整数射线表示并精确验证正交性与跃迁概率",
-        "精确 ASD 对固定 Raynal 有理重构归一化且不截断;公式可廉价达到 1,真正超越另由严谨代数区间旗标判定,本表示不覆盖精确 MUB 存在性"),
-    "QuantumFoundations/DephrasureCodeDesign": (
-        "为退相位擦除信道的三次或四次使用设计输入密度矩阵因子,提高每次使用的相干信息",
-        "四例相干信息相对单字母率和已重算公开见证包络的进度均值,不截断;另报超过包络 1e-9 bits/use 的量,不宣称全局纪录或渐近容量"),
     "Mathematics/NonlinearCodeRecords": (
         "在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到",
         "从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关"),

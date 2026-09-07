@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 83 |
+| 任务包 | 85 |
 | optimization | 44 |
-| discovery | 39 |
+| discovery | 41 |
 | certified | 5 |
-| candidate | 78 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 21,Physics 18) |
+| candidate | 80 |
+| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 12,Mathematics 20,Physics 18) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -38,7 +38,7 @@
 | [`MutuallyUnbiasedBases6`](benchmarks/Physics/MutuallyUnbiasedBases6/)<br>六维近似互无偏基 | Physics | QuantumFoundations | uncapped | analytical | candidate | optimize four approximate measurement bases exactly | 在六维复空间构造四组尽量互无偏的测量基,用有界 Gaussian 整数射线表示并精确验证正交性与跃迁概率 | 精确 ASD 对固定 Raynal 有理重构归一化且不截断;公式可廉价达到 1,真正超越另由严谨代数区间旗标判定,本表示不覆盖精确 MUB 存在性 |
 | [`SuperconductorTcRecord`](benchmarks/Physics/SuperconductorTcRecord/)<br>超导临界温度纪录搜索 | Physics | Superconductivity | uncapped | allen_dynes_formula_solved_to_real_anchors | candidate | beat the published record by computing where Allen-Dynes says to look | 在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限) | 真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录 |
 
-### 开放组合纪录(combinatorial,无上限) — 18
+### 开放组合纪录(combinatorial,无上限) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -55,7 +55,6 @@
 | [`NonlinearCodeRecords`](benchmarks/Mathematics/NonlinearCodeRecords/)<br>非线性码规模纪录 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger binary code than a linear one can be | 在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到 | 从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关 |
 | [`RamseyLowerBound`](benchmarks/Mathematics/RamseyLowerBound/)<br>Ramsey 下界染色 | Mathematics | Mathematics | uncapped | analytical | candidate | construct larger (s,t)-Ramsey colorings | 构造更大的 (s,t)-Ramsey 染色以提高下界 | 对最好已知染色阶数的平均进度;无上限 |
 | [`SchurPartition`](benchmarks/Mathematics/SchurPartition/)<br>Schur 无和分拆 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer sum-free k-partition than the published record | 为给定的分组数 k 构造尽可能长的无和分拆(每组内不含 a+b=c,允许 a=b) | k=4 对照证明最优的 Schur 数(硬上限,已披露);k=6、k=7 对照尚未证明最优的最好已知下界(真实无上限空间) |
-| [`ShannonCapacityConstruction`](benchmarks/Mathematics/ShannonCapacityConstruction/)<br>七环五次强积独立集构造 | Mathematics | Mathematics | uncapped | analytical | candidate | exact fixed-fifth-power C7 independent-set construction | 在七环的固定五次强积中构造更大的独立集,提交七元字母表上的五位码字;不求完整 Shannon 容量 | 逐对精确验证环距离,按码字数从 243 词乘积基线到 367 词历史构造归一化且不截断;公开重放得 1,超出仅表示超过该见证 |
 | [`Superpermutation`](benchmarks/Mathematics/Superpermutation/)<br>超排列最短串 | Mathematics | Mathematics | uncapped | analytical | candidate | shorter strings that contain every permutation | 构造更短的超排列字符串,使其包含全部排列作为连续子串 | 对最短已知长度的平均进度;无上限 |
 | [`VanDerWaerdenColoring`](benchmarks/Mathematics/VanDerWaerdenColoring/)<br>van der Waerden 无进染色 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer AP-free coloring than the published witness | 为给定的颜色数与等差数列长度构造尽可能长的、不含单色等差数列的染色 | 两组对照证明最优的 van der Waerden 数(硬上限,已披露)、一组对照尚未证明最优的最好已知下界(真实无上限空间) |
 | [`ZarankiewiczMatrix`](benchmarks/Mathematics/ZarankiewiczMatrix/)<br>Zarankiewicz 极值矩阵 | Mathematics | Mathematics | uncapped | analytical | candidate | build a denser K3,3-free 0/1 matrix than the published record | 在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题 | 对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录 |
@@ -71,15 +70,16 @@
 | [`LennardJonesCluster`](benchmarks/Chemistry/LennardJonesCluster/)<br>Lennard-Jones 团簇 | Chemistry | Chemistry | uncapped | analytical | certified | minimize the energy of atomic clusters | 求 Lennard-Jones 原子簇的最低能量几何构型 | 对全局最小的平均缺口闭合;无上限 |
 | [`MolecularLeadOptimization`](benchmarks/Chemistry/MolecularLeadOptimization/)<br>分子先导组合优化 | Chemistry | MedicinalChemistry | uncapped | rdkit_cheminformatics_property_filter | candidate | build a diverse portfolio of novel, developable leads | 构建结构多样、可开发的新颖先导化合物组合,而非单个分子 | 多样性约束下的组合价值,对标已上市药物;无上限 |
 
-### certificate_bound — 3
+### certificate_bound — 4
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`ShannonCapacityCertificate`](benchmarks/ComputerScience/ShannonCapacityCertificate/)<br>奇圈香农容量双侧证书 | ComputerScience | InformationTheory | uncapped | analytical | candidate | certify the interval, do not quote it | 为奇圈的香农容量给出一段可精确验证的区间:下界交一个强积幂里的零错码(任意两码字不得在每个坐标上都相等或相邻),上界交一份有理 Lovasz 矩阵与有理界,使 b*I - A 正定。C7 的容量自 1956 年 Shannon 提出、1979 年 Lovasz 解决 C5 之后一直未知,下端在 2026 年 7 月一个月内被改进了三次,上端 theta 自 1979 年未动过。 | 四个奇圈(C7/C13/C19/C23)取均值,不设上限。零点不是引用而是随包发布的显式码集,oracle 用同一套独立性检验接受它;1.0 是 2026-09-06 时的已发表最好下界,四个都不是在本题允许的幂上达到的。有理数精确验证,提交浮点判零——数值特征值不是证明。 |
 | [`ChowlaCosineCertificate`](benchmarks/Mathematics/ChowlaCosineCertificate/)<br>Chowla 余弦下界证书 | Mathematics | Mathematics | uncapped | analytical | candidate | certify a smaller global cosine bound | 选择有限个整数频率,并用有理平方模的完整 Laurent 恒等式证明余弦和在整条圆周上的全局下界 | 三个规模的精确证书进度取均值且 1 以上不截断;1 是公开的贪心 Sidon 构造而非全局最优,廉价局部搜索已到约 1.0074 |
 | [`SpherePackingCertificate`](benchmarks/Mathematics/SpherePackingCertificate/)<br>球堆积上界证书 | Mathematics | DiscreteGeometry | uncapped | analytical | candidate | prove a packing bound, exactly | 为球堆积密度给出一份可精确验证的上界证明。Cohn-Elkies 定理把上界化为分析问题:找一个函数,它在半径外非正、其傅里叶变换处处非负。除 1/2/3/8/24 维外全部开放——12 维已知最好堆积 0.03704,最好的证明只到 0.06279。取变量 w=2π‖x‖²,拉盖尔特征基的系数是有理的,两条假设都变成有理半轴上的有理多项式,而单变量多项式在半轴非负当且仅当能写成 σ₀+wσ₁,这个刻画是完备的。 | 四个维度(8/12/16/20)取均值,不设上限。零点是闭式的二项证书——这个方法不花力气就能给出的东西;1.0 是已发表的 Cohn-Elkies 数值界,而与之等强的精确有理证书似乎在任何维度都还没有人发表过。有理数精确验证,提交浮点判零:网格线性规划这个教科书方法会给出假界(16 阶时 8 维报 0.06237,低于 E8 格实际达到的 0.0625)。 |
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 
-## Discovery(39)
+## Discovery(41)
 
 ### 公式(formula) — 6
 
@@ -103,12 +103,14 @@
 | [`BlackBoxGroupIdentification`](benchmarks/Mathematics/BlackBoxGroupIdentification/)<br>黑盒群同构辨识 | Mathematics | Mathematics | clipped | analytical | candidate | A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label | 只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类 | 目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识 |
 | [`HiddenCouplingNetwork`](benchmarks/Physics/HiddenCouplingNetwork/)<br>隐藏耦合网络重建 | Physics | Physics | clipped | physical_sim | candidate | A network of `units` observed units relaxes to a steady state under constant drive. | 实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答 | 带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现 |
 
-### 证据(evidence) — 7
+### 证据(evidence) — 9
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`OccupancyDetectionDesign`](benchmarks/Biology/OccupancyDetectionDesign/)<br>生态占域与探测设计 | Biology | Ecology | clipped | statistical_sim | candidate | A nondetection does not prove absence. | 在漏检条件下分配站点复访与调查方法,恢复栖息地占域效应或拒绝不充分模型 | 效应方向、效应量与平均占域率;误发现、拒答、覆盖率和留出迁移分列 |
 | [`ProspectiveMetaAnalysis`](benchmarks/Biology/ProspectiveMetaAnalysis/)<br>前瞻荟萃分析 | Biology | EvidenceSynthesis | clipped | prospective_evidence_synthesis | candidate | synthesize registered evidence and design confirmation | 在注册表加文献语料里筛研究、识别同一人群血缘的重复报告与换端点,做异质性荟萃回归 | 筛选、证据血缘完整性、荟萃回归、校准拒答、下一步研究信息量与前瞻确认分列 |
 | [`ForcedSignalAttribution`](benchmarks/EarthScience/ForcedSignalAttribution/)<br>强迫信号检测归因 | EarthScience | ClimateScience | clipped | statistical_sim | candidate | A regional field is observed for `years` years over `regions` regions. | 在控制年预算下判断区域记录里是否含强迫响应、估其幅度与区间;模型指纹或变率不可信时拒答 | 检测率、幅度分、区间覆盖分列;红噪声假趋势与安静模型均记误发现 |
+| [`UPbConcordiaInference`](benchmarks/EarthScience/UPbConcordiaInference/)<br>铀铅谐和图事件归因 | EarthScience | Geophysics | clipped | physical_sim | candidate | infer a zircon event history | 在分析预算内选择锆石域,由两套铀铅衰变比判断单一结晶或一次铅丢失历史;可分辨的多事件历史须拒答 | 事件类型 + 结晶与铅丢失年龄 + 证据血缘;误发现、拒答、覆盖率和留出迁移分列 |
 | [`ModalDamageAttribution`](benchmarks/Engineering/ModalDamageAttribution/)<br>模态损伤归因 | Engineering | StructuralEngineering | clipped | physical_sim | candidate | is the modal shift damage, or the weather? | 在受预算约束的测量日里判断模态频率的偏移是不是某个内部元件的刚度损伤、是哪一个、损失多少;支座变化导致的偏移须拒答 | 定位精确门控 + 严重度容差评分;温度对频率比精确抵消,健康结构误报与支座变化误判分别记误发现,分数标尺锚在全弃权为零 |
 | [`HeavyTailEvidence`](benchmarks/Mathematics/HeavyTailEvidence/)<br>重尾证据判别 | Mathematics | Mathematics | clipped | physical_sim | candidate | A positive sample is either a power law with known `xmin`, a lognormal above `xmin`, a | 在已知 xmin 下判断样本是幂律还是对数正态;指数截断或样本过短须拒答 | 家族恢复 + 截断/小样本拒答;不是质量窗口的 look-elsewhere,也不是不相容常数调和 |
 | [`DiscrepantMeasurements`](benchmarks/Physics/DiscrepantMeasurements/)<br>不相容测量调和 | Physics | ParticlePhysics | clipped | statistical_sim | candidate | Eight groups have measured the same physical constant. · on-ramp,不配对 | 八组测量同一常数但彼此不相容,诊断这批证据出了什么问题并给最佳值或判定没有最佳值 | 缺陷诊断 + 收费的内部一致性检验 + 拒答 |
