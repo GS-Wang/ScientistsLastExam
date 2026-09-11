@@ -106,6 +106,10 @@ class F6SpinGlassGroundStateTests(unittest.TestCase):
     def test_malformed_candidate_outputs_are_finite_invalid_zero(self):
         cases = {
             "none": None,
+            "string": "invalid",
+            "tuple": tuple([1] * 1728),
+            "zero": [1] * 1727 + [0],
+            "minus_two": [1] * 1727 + [-2],
             "short": [1] * 1727,
             "long": [1] * 1729,
             "nan": [1] * 1727 + [float("nan")],
@@ -190,6 +194,52 @@ class F6SpinGlassGroundStateTests(unittest.TestCase):
         self.evaluator.evaluate(self.baseline.solve_ising)
         after = _tree_digest(TASK)
         self.assertEqual(before, after)
+
+
+class PublicMethodControlTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.reference = _load(TASK / 'verification/reference_tempering.py', 'f6_tempering')
+        construction = _load(TASK / 'verification/reference_construction.py', 'f6_controls')
+        cls.problem, _ = construction.build_control_instance(4)
+
+    def test_vector_energy_and_checkerboard_quench_match_independent_edge_sum(self):
+        import numpy as np
+        problem = self.problem
+        edges, neighbours, couplings, colours = self.reference._graph(problem)
+        spins = np.array([[1 if (i * 17 + j) % 5 else -1 for i in range(problem['n'])]
+                          for j in range(3)], dtype=np.int8)
+        before = self.reference._energies(spins, edges)
+        expected = [sum(j * int(row[u]) * int(row[v]) for u, v, j in problem['edges'])
+                    for row in spins]
+        self.assertEqual(before.tolist(), expected)
+        self.reference._quench(spins, neighbours, couplings, colours)
+        after = self.reference._energies(spins, edges)
+        self.assertTrue(np.all(after <= before))
+        self.assertTrue(np.all(after >= -96))
+        fields = np.sum(spins[:, neighbours] * couplings[None, :, :], axis=2)
+        self.assertTrue(np.all(-2 * spins * fields >= 0))
+
+    def test_replica_search_is_per_call_deterministic_and_returns_only_legal_spins(self):
+        import numpy as np
+        first = self.reference.search(self.problem, replicas=6, sweeps=8)
+        np.random.seed(99)
+        np.random.random(1000)
+        second = self.reference.search(self.problem, replicas=6, sweeps=8)
+        self.assertEqual(first, second)
+        self.assertEqual(len(first), self.problem['n'])
+        self.assertTrue(all(type(value) is int and value in (-1, 1) for value in first))
+
+    def test_each_standalone_variant_changes_only_its_entrypoint_invocation(self):
+        source = (TASK / 'verification/reference_tempering.py').read_text()
+        for filename, replacement in (
+            ('probe_greedy_multistart.py', '    return greedy_multistart(problem)\n'),
+            ('ablation_no_exchange.py', '    return search(problem, exchange=False)\n'),
+            ('ablation_no_quench.py', '    return search(problem, quench=False)\n'),
+        ):
+            with self.subTest(filename=filename):
+                self.assertEqual((TASK / 'verification' / filename).read_text(),
+                                 source.replace('    return search(problem)\n', replacement))
 
 
 if __name__ == "__main__":

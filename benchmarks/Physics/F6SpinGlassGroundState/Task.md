@@ -68,3 +68,11 @@ and constraint satisfaction problems*, Phys. Rev. E 97, 043303 (2018), DOI
 
 This package is a candidate. Its fixed-instance attainability was audited privately, while
 external statistical-physics review and formal SLE calibration remain pending.
+
+## Relationship and distinctions
+
+- `QuantumDynamics/HamiltonianLearning` infers unknown Hamiltonian coefficients from observed dynamics. Here every coupling is public and the artifact is a low-energy classical spin vector.
+- `Spectroscopy/SpinSystemInference` recovers a molecular spin system from spectra and reports discovery/refusal diagnostics. This task uses exact deterministic integer energy on a fixed cubic graph.
+- `Chemistry/LennardJonesCluster` optimizes continuous atomic coordinates against public cluster records. Here variables are discrete and the normalization target is a finite, attainable cube bound.
+
+A separately implemented replica-exchange method, a 256-start local-descent shortcut and no-exchange/no-quench ablations are being audited. Their measurements and capability separation are pending; these descriptions do not establish a qualified reference, model difficulty or admission.

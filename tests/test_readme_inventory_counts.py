@@ -91,7 +91,8 @@ class ReadmeInventoryCountTests(unittest.TestCase):
         self.assertEqual(_one(r"张量秩、超排列等 (\d+) 题"), self.analogue["combinatorial"])
         self.assertEqual(_one(r"分子与大分子设计\((\d+) 题\)"), self.analogue["molecular_design"])
         self.assertEqual(_one(r"证书上界\((\d+) 题"), self.analogue["certificate_bound"])
-        named = {"engineering_design", "combinatorial", "molecular_design", "certificate_bound"}
+        named = {"engineering_design", "combinatorial", "molecular_design", "certificate_bound", "fixed_combinatorial"}
+        self.assertEqual(_one(r"另有固定组合优化 (\d+) 题"), self.analogue["fixed_combinatorial"])
         self.assertEqual(set(self.analogue) - {None}, named,
                          "a new optimization analogue needs its own sentence in README.md")
         self.assertEqual(_one(r"optimization\(\d+ 个\):在受约束的设计空间里把目标做得更好。分(.)类:"),

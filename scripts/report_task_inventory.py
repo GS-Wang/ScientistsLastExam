@@ -557,7 +557,7 @@ def render_readme_counts(rows: list[dict]) -> str:
     disciplines = sorted({r["discipline"] for r in rows})
     opt_named = (
         "engineering_design", "combinatorial", "molecular_design", "certificate_bound",
-    )
+    ) + (("fixed_combinatorial",) if opt_cells["fixed_combinatorial"] else ())
     status_bits = []
     for status in ("certified", "candidate"):
         if statuses.get(status):
@@ -579,7 +579,9 @@ def render_readme_counts(rows: list[dict]) -> str:
         % (opt_cells["combinatorial"], opt_cells["molecular_design"],
            opt_cells["certificate_bound"]),
         "分数是论证证明出的界有多强)。",
-        "分数由做出来的东西有多好决定;公开纪录是 score = 1 的见证,不是封顶。",
+        *(["另有固定组合优化 %d 题,在固定实例上对照严格可达上界或下界,有封顶。" % opt_cells["fixed_combinatorial"]]
+          if opt_cells["fixed_combinatorial"] else []),
+        "分数由做出来的东西有多好决定;开放组合纪录的公开纪录是 score = 1 的见证,不是封顶。",
         "",
         "discovery(%d 个):从受预算约束的观测里恢复一个机制,或判断根本没有机制可恢复。"
         % forms["discovery"],
