@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep solve_ising(problem), returning a flat list of exactly 1728 literal integer -1/+1 spins; do not return the static-artifact {"spins": [...]} wrapper.
+2) The only problem keys are L, n, hamiltonian and edges. Minimize sum(J*s[u]*s[v]) over the 5184 unique listed edges; there is no leading minus sign or double counting.
+3) The exact attainable lower bound is -2592. The valid all-plus-one baseline has energy 0. Candidate-provided score or energy claims are ignored.
+4) Deterministic CPU code. Standard library, NumPy and SciPy only; no network or process creation.
+5) Do not read verification/, frontier_eval/ or references/.

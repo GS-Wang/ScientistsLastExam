@@ -27,6 +27,12 @@ tasks:
     status: candidate
     reason: budgeted pose-temperature experiments for twelve-parameter accelerometer calibration and non-affine fault-axis attribution; retained pending independent inertial-sensing review and server-held regimes
     citation_ids: [doi:10.48456/tr-696, doi:10.4153/CJM-1960-030-4, doi:10.1214/aoms/1177732360]
+  Physics/F6SpinGlassGroundState:
+    status: candidate
+    reason: One fixed public L=12 periodic three-dimensional F6 planted spin glass with an exact cube-decomposition lower bound of -2592 and a separately held private witness audited at that bound; an exploratory pre-frozen static-artifact Astra probe reached -2572, but this is not formal SLE calibration, external review, a blind public instance, or a general hardness result. Retained as a candidate pending fresh server-held instances, proper Linux sandbox evaluation, formal calibration and external statistical-physics review.
+    citation_ids:
+      - doi:10.1103/PhysRevE.97.043303
+      - arxiv:1711.04083
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 85 |
-| optimization | 42 |
+| 任务包 | 86 |
+| optimization | 43 |
 | discovery | 43 |
 | certified | 5 |
-| candidate | 80 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 81 |
+| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 13,Mathematics 19,Physics 18) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(42)
+## Optimization(43)
 
 ### 工程设计(engineering_design) — 16
 
@@ -57,6 +57,12 @@
 | [`VanDerWaerdenColoring`](benchmarks/Mathematics/VanDerWaerdenColoring/)<br>van der Waerden 无进染色 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer AP-free coloring than the published witness | 为给定的颜色数与等差数列长度构造尽可能长的、不含单色等差数列的染色 | 两组对照证明最优的 van der Waerden 数(硬上限,已披露)、一组对照尚未证明最优的最好已知下界(真实无上限空间) |
 | [`ZarankiewiczMatrix`](benchmarks/Mathematics/ZarankiewiczMatrix/)<br>Zarankiewicz 极值矩阵 | Mathematics | Mathematics | uncapped | analytical | candidate | build a denser K3,3-free 0/1 matrix than the published record | 在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题 | 对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录 |
 | [`QuantumErrorDecoder`](benchmarks/Physics/QuantumErrorDecoder/)<br>表面码解码器 | Physics | QuantumErrorCorrection | uncapped | stim_stabilizer_circuit_sampling | candidate | decode rotated surface-code memory below threshold | 为旋转表面码存储设计阈值以下的解码器 | 相对最小权完美匹配的逻辑错误率对数下降;无上限 |
+
+### 固定组合优化(fixed_combinatorial,有严格上限) — 1
+
+| 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
+|---|---|---|---|---|---|---|---|---|
+| [`F6SpinGlassGroundState`](benchmarks/Physics/F6SpinGlassGroundState/)<br>F6 自旋玻璃基态搜索 | Physics | Physics | clipped | analytical_fixed_ising_energy | candidate | Find a ground-state spin configuration of the supplied nearest-neighbour Ising Hamiltonian on a | 在固定的 L=12 周期三维 F6 植入自旋玻璃上搜索精确基态,提交 1728 个 ±1 自旋 | 从全 +1 能量 0 到可达严格下界 -2592 的归一化进度,封顶 1;原始能量、剩余 gap 与是否精确命中分列 |
 
 ### 分子与大分子设计(molecular_design) — 5
 

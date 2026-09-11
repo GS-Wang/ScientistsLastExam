@@ -56,6 +56,7 @@ CHINESE_NAMES = {
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
+    "Physics/F6SpinGlassGroundState": "F6 自旋玻璃基态搜索",
     "Geophysics/GravityInversion": "重力反演",
     "Geophysics/UPbConcordiaInference": "铀铅谐和图事件归因",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
@@ -192,6 +193,9 @@ CHINESE_BRIEFS = {
     "Physics/CriticalPhenomenaLab": (
         "主动选择有限尺寸实验,区分连续/一级相变与 crossover 或 BKT-like 世界",
         "机制与有限尺寸外推;误发现、拒答与覆盖率分开报告"),
+    "Physics/F6SpinGlassGroundState": (
+        "在固定的 L=12 周期三维 F6 植入自旋玻璃上搜索精确基态,提交 1728 个 ±1 自旋",
+        "从全 +1 能量 0 到可达严格下界 -2592 的归一化进度,封顶 1;原始能量、剩余 gap 与是否精确命中分列"),
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
@@ -418,6 +422,7 @@ FORM_TITLES = OrderedDict([("optimization", "Optimization"), ("discovery", "Disc
 ANALOGUE_TITLES = OrderedDict([
     ("engineering_design", "工程设计(engineering_design)"),
     ("combinatorial", "开放组合纪录(combinatorial,无上限)"),
+    ("fixed_combinatorial", "固定组合优化(fixed_combinatorial,有严格上限)"),
     ("molecular_design", "分子与大分子设计(molecular_design)"),
 ])
 KIND_TITLES = OrderedDict([
