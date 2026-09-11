@@ -1,0 +1,217 @@
+{
+  "candidate_plan_sha256": {
+    "baseline": "47055f86a9b070c7333d177886a6988ae457e2d4ac53a0a4fcfd457a924f16d1",
+    "greedy_256": "6e2a45c0999878968ac349b7aaa5cb935aeb476426db4a0b83edb7cc610bd7d2",
+    "no_exchange": "acd9fcefa51a72b4d337760b5a809a4b0ea5aa69bd7e2e847eb1616fa58aeab7",
+    "no_quench": "eb824af8b4482e8dd369ff2a0a9ca3d23d8b0214dbdb3fd0645b277da0fb05ff",
+    "replica_exchange": "9309c722b8f20f59560159dbbb1f365f2c48b1473e768b358e9941ef02fd9f70"
+  },
+  "candidate_sources_unchanged": true,
+  "candidates": {
+    "baseline": {
+      "candidate_sha256": "47055f86a9b070c7333d177886a6988ae457e2d4ac53a0a4fcfd457a924f16d1",
+      "repeat_identical": true,
+      "runs": [
+        {
+          "full_metrics_sha256": "35d285f33be25f3ea1a6cdd4c3e46f2cd66a2e37b020f1c90be7fc0f62d6d486",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.0,
+            "energy": 0,
+            "gap": 2592,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 0.8883236981928349
+        },
+        {
+          "full_metrics_sha256": "35d285f33be25f3ea1a6cdd4c3e46f2cd66a2e37b020f1c90be7fc0f62d6d486",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.0,
+            "energy": 0,
+            "gap": 2592,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 0.854412779211998
+        }
+      ]
+    },
+    "greedy_256": {
+      "candidate_sha256": "6e2a45c0999878968ac349b7aaa5cb935aeb476426db4a0b83edb7cc610bd7d2",
+      "repeat_identical": true,
+      "runs": [
+        {
+          "full_metrics_sha256": "d7cc2f752488b3c9dcbbada7e9a0c475743eeb776ed155ff74b50453f2080214",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.7901234567901234,
+            "energy": -2048,
+            "gap": 544,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.7901234567901234,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 1.9229390379041433
+        },
+        {
+          "full_metrics_sha256": "d7cc2f752488b3c9dcbbada7e9a0c475743eeb776ed155ff74b50453f2080214",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.7901234567901234,
+            "energy": -2048,
+            "gap": 544,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.7901234567901234,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 2.72907242923975
+        }
+      ]
+    },
+    "no_exchange": {
+      "candidate_sha256": "acd9fcefa51a72b4d337760b5a809a4b0ea5aa69bd7e2e847eb1616fa58aeab7",
+      "repeat_identical": true,
+      "runs": [
+        {
+          "full_metrics_sha256": "af1e6f41cc8590cc9a98b5af16175e5df4778dd9333828542d9857c5a1a12448",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.9845679012345679,
+            "energy": -2552,
+            "gap": 40,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.9845679012345679,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 3.282365979626775
+        },
+        {
+          "full_metrics_sha256": "af1e6f41cc8590cc9a98b5af16175e5df4778dd9333828542d9857c5a1a12448",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.9845679012345679,
+            "energy": -2552,
+            "gap": 40,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.9845679012345679,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 3.2855852395296097
+        }
+      ]
+    },
+    "no_quench": {
+      "candidate_sha256": "eb824af8b4482e8dd369ff2a0a9ca3d23d8b0214dbdb3fd0645b277da0fb05ff",
+      "repeat_identical": true,
+      "runs": [
+        {
+          "full_metrics_sha256": "b43d3fbb4dcfac690fb2564c1f9d84d699dabb9721c7660d645bae16c1a597b8",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.9861111111111112,
+            "energy": -2556,
+            "gap": 36,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.9861111111111112,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 3.3215979393571615
+        },
+        {
+          "full_metrics_sha256": "b43d3fbb4dcfac690fb2564c1f9d84d699dabb9721c7660d645bae16c1a597b8",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.9861111111111112,
+            "energy": -2556,
+            "gap": 36,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.9861111111111112,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 3.360540645197034
+        }
+      ]
+    },
+    "replica_exchange": {
+      "candidate_sha256": "9309c722b8f20f59560159dbbb1f365f2c48b1473e768b358e9941ef02fd9f70",
+      "repeat_identical": true,
+      "runs": [
+        {
+          "full_metrics_sha256": "b43d3fbb4dcfac690fb2564c1f9d84d699dabb9721c7660d645bae16c1a597b8",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.9861111111111112,
+            "energy": -2556,
+            "gap": 36,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.9861111111111112,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 3.3387529589235783
+        },
+        {
+          "full_metrics_sha256": "b43d3fbb4dcfac690fb2564c1f9d84d699dabb9721c7660d645bae16c1a597b8",
+          "metrics": {
+            "baseline_energy": 0,
+            "combined_score": 0.9861111111111112,
+            "energy": -2556,
+            "gap": 36,
+            "ground_state_hit": false,
+            "lower_bound": -2592,
+            "raw_score": 0.9861111111111112,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 3.4011192992329597
+        }
+      ]
+    }
+  },
+  "completed_calls": 10,
+  "model_calls": 0,
+  "planned_calls": 10,
+  "runtime": {
+    "numpy": "1.24.4",
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "scipy": "1.10.1",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+  "runtime_unchanged": true,
+  "schema_version": 1,
+  "scientific_admission": "not_assessed",
+  "scope": "fixed public-method qualification pilot; not model calibration or global evidence",
+  "source_revision": "13a3dfb3f6aaf5076b3a2e003a1ac7e1c1a80edc",
+  "task_id": "Physics/F6SpinGlassGroundState",
+  "task_package_sha256": "91d6021ff1c58c6e7bedec702cec5f72a9fe1649f11cc30838e2cb32b0930fb2",
+  "task_unchanged": true,
+  "timeout_seconds": 600,
+  "upstream_task_head": "30501b1ab634b82b8a45adec7cddbb47baaf67d8"
+}

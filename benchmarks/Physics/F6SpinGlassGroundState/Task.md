@@ -75,4 +75,27 @@ external statistical-physics review and formal SLE calibration remain pending.
 - `Spectroscopy/SpinSystemInference` recovers a molecular spin system from spectra and reports discovery/refusal diagnostics. This task uses exact deterministic integer energy on a fixed cubic graph.
 - `Chemistry/LennardJonesCluster` optimizes continuous atomic coordinates against public cluster records. Here variables are discrete and the normalization target is a finite, attainable cube bound.
 
-A separately implemented replica-exchange method, a 256-start local-descent shortcut and no-exchange/no-quench ablations are being audited. Their measurements and capability separation are pending; these descriptions do not establish a qualified reference, model difficulty or admission.
+## Fixed method qualification pilot (2026-09-11)
+
+| Fixed method | Energy | Combined score | Gap to exact target | Effect vs full method |
+|---|---:|---:|---:|---|
+| All-plus baseline | 0 | 0 | 2592 | Baseline |
+| Replica exchange, 24 temperatures, 1024 sweeps | -2556 | 0.9861111111111112 | 36 | Method candidate |
+| Greedy strict descent, 256 starts | -2048 | 0.7901234567901234 | 544 | Lower-cost probe |
+| No exchange, independent temperature chains | -2552 | 0.9845679012345679 | 40 | Drops only 4 energy units / 0.0015432098765432 score |
+| No final quench | -2556 | 0.9861111111111112 | 36 | No measured effect |
+
+Each frozen candidate was evaluated twice through the real Linux candidate sandbox at source
+`13a3dfb3f6aaf5076b3a2e003a1ac7e1c1a80edc`; all ten results were valid and each full-metric pair
+was identical. The graph, integer oracle and normalization were unchanged. Runtime was Python
+3.8.10 / NumPy 1.24.4 / SciPy 1.10.1, with numerical-library thread counts fixed at one and a
+600-second candidate timeout. The full method took 3.34–3.40 seconds and the no-exchange method
+3.28–3.29 seconds; these are observations on this host, not portable timing guarantees.
+
+**Scientific admission remains blocked.** The unchanged 10% shortcut margin sets a threshold of
+0.8875, which the no-exchange alternative exceeds. The greedy-only comparison would miss this
+strong generic method. Final quench has no observed benefit, so it cannot count as a useful
+capability in an ablation ladder. The full method also misses the exact target by 36 energy
+units. A stronger scientific justification, broader fixed shortcut search, complete novelty
+comparison and genuine frontier first-proposal evidence remain outstanding. No model call was
+made by this pilot. See `references/known_best.md` for limitations and provenance.

@@ -1,11 +1,11 @@
 schema_version: 2
 scientific_question: Can a search find the exact ground state of one fixed fresh L=12 periodic three-dimensional
   F6 planted spin glass, rather than merely return a strong near-optimal state?
-artifact: A deterministic solve_ising(problem) function returning exactly 1728 literal integer spins in
-  {-1,+1} as a flat list.
+artifact: A deterministic solve_ising(problem) function returning exactly 1728 literal integer spins in {-1,+1}
+  as a flat list.
 oracle:
-  model: Exact integer evaluation of H=sum J_ij*s_i*s_j over 5184 unique public nearest-neighbour edges;
-    the F6 cube decomposition proves the lower bound -2592.
+  model: Exact integer evaluation of H=sum J_ij*s_i*s_j over 5184 unique public nearest-neighbour edges; the
+    F6 cube decomposition proves the lower bound -2592.
   feasibility: The callable must return a flat list of exactly 1728 literal integers, each -1 or +1; malformed
     values and energies below the proved bound are invalid and score zero.
   deterministic: true
@@ -13,56 +13,62 @@ oracle:
     no evaluator RNG or write occurs.
 normalization:
   baseline: The all-plus-one state has exact energy 0 and score 0.
-  reference: The mathematical score-one anchor remains the exact attainable F6 bound -2592, supported
-    by a privately audited witness. verification/reference_tempering.py is a new public-input-only replica-exchange
-    method candidate; it is not yet a qualified admission reference and does not contain that witness.
-  score: max(0,(0-E)/(0-(-2592))) for valid E, capped at 1 by the checked physical lower bound; exact
-    energy, gap and ground-state hit are separate metrics.
+  reference: 'The mathematical score-one anchor remains the exact attainable F6 bound -2592, supported by the
+    original privately audited witness. verification/reference_tempering.py is an independently written public-input-only
+    method scoring 0.9861111111111112 in the fixed Linux pilot. It contains no witness and is not a qualified
+    admission reference: the simpler no-exchange variant scores 0.9845679012345679 and fails the unchanged
+    10% separation requirement.'
+  score: max(0,(0-E)/(0-(-2592))) for valid E, capped at 1 by the checked physical lower bound; exact energy,
+    gap and ground-state hit are separate metrics.
 citations:
 - id: doi:10.1103/PhysRevE.97.043303
   title: 'From Near to Eternity: Spin-glass planting, tiling puzzles, and constraint satisfaction problems'
 - id: arxiv:1711.04083
   title: 'From Near to Eternity: Spin-glass planting, tiling puzzles, and constraint satisfaction problems'
 - id: arxiv:cond-mat/9512035
-  title: Exchange Monte Carlo Method and Application to Spin Glass Simulations (Hukushima and Nemoto);
-    method source, not instance-hardness evidence
+  title: Exchange Monte Carlo Method and Application to Spin Glass Simulations (Hukushima and Nemoto); method
+    source, not instance-hardness evidence
 invariants:
 - The public JSON has raw SHA-256 bcb95c8bcbf1de65b4757f1d83418e8ab3a4d3277f7d6424837c5440faeee4a6, exactly
   four documented keys, L=12, n=1728 and 5184 unique edges.
-- H has no leading minus sign and counts each unique undirected edge exactly once; global spin reversal
-  preserves H.
+- H has no leading minus sign and counts each unique undirected edge exactly once; global spin reversal preserves
+  H.
 - The 432 edge-disjoint F6 cubes each have exact local minimum -6 with degeneracy 16, so every spin assignment
   has H>=-2592.
 - A separately held private witness with content SHA-256 dc0b9f5a6315c2ba591e45aaaa436be98916395c1d7b8d359f6ad6bb98602748
   was independently evaluated at -2592; this hash is provenance, not a cryptographic proof.
-- Candidate mutation of the fresh public payload cannot change the evaluator's immutable trusted edges,
-  n or bound.
-known_shortcuts: The fixed couplings, planted-family structure and exact target are public, so this is
-  not anti-contamination or a hidden-answer security claim. Recalling the paper or target is insufficient
-  because scoring recomputes the submitted literal vector. The exploratory Astra result at energy -2572
-  is a strong approximation, not evidence that the model knows nothing, a success-rate estimate, or a
-  computational lower bound. The executable local-descent probe uses 256 fixed random starts, reads only
-  the public graph and retains the best exact public energy. Replica exchange and final quench are separately
-  ablated. All new measurements and capability separation are pending; no new model calibration has run.
+- Candidate mutation of the fresh public payload cannot change the evaluator's immutable trusted edges, n or
+  bound.
+known_shortcuts: 'The fixed couplings, planted-family structure and exact target are public; this is not an
+  anti-contamination claim. The original exploratory Astra artifact at energy -2572 is not formal SLE calibration.
+  The 2026-09-11 fixed Linux pilot at source 13a3dfb3f6aaf5076b3a2e003a1ac7e1c1a80edc ran five frozen programs
+  twice each: all-plus 0; replica exchange 0.9861111111111112 (energy -2556); greedy local descent with 256
+  starts 0.7901234567901234 (-2048); independent temperature chains without exchange 0.9845679012345679 (-2552);
+  no final quench 0.9861111111111112 (-2556). All ten results are valid and each full metric pair repeats exactly.
+  The strong no-exchange alternative is included in the executable probe contract; it exceeds the unchanged
+  reference*0.9 threshold 0.8875. Final quench has zero measured benefit. No grid search, model draw, or difficulty
+  pass is claimed; qualification remains blocked.'
 review:
   domain: pending_external_statistical_physics
-  evaluator_security: Automated exact-energy, malformed-output, mutation-isolation, asset-hash, physical-bound,
-    wrapper and mount-boundary checks; no claim of independent scientific review or proper Linux sandbox
-    certification.
-  reference_implementation_verified: Public construction controls reproduce the F6 local minima and small-instance
-    attainability; the fixed hard witness is kept outside the repository for maintainer audit.
+  evaluator_security: Exact-energy, malformed-output, mutation-isolation, asset-hash, physical-bound, wrapper
+    and mount-boundary checks; 148 targeted tests passed without skips on Linux at 13a3dfb3f6aaf5076b3a2e003a1ac7e1c1a80edc.
+    This is targeted validation, not independent scientific review or full certification.
+  reference_implementation_verified: 'Public construction controls reproduce the F6 local minima and small-instance
+    attainability. The new public-input method ran twice with valid identical full metrics, but its scientific
+    qualification fails: no-exchange nearly matches it and final-quench ablation has no effect. The original
+    fixed witness is outside this repository and was not re-audited in this repair.'
 provenance:
   class: known_answer
-  target_source: One fresh L=12 instance generated before the exploratory solver dispatch from the F6
-    planted family of Hamze et al.; public couplings are frozen and the exact target follows from the
-    cube lower bound plus a separately held attaining witness.
+  target_source: One fresh L=12 instance generated before the exploratory solver dispatch from the F6 planted
+    family of Hamze et al.; public couplings are frozen and the exact target follows from the cube lower bound
+    plus a separately held attaining witness.
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: Public packet was frozen before one exploratory static-artifact Astra probe;
-    future formal blind confirmation requires a fresh server-held instance.
+  fresh_confirmation_status: Public packet was frozen before one exploratory static-artifact Astra probe; future
+    formal blind confirmation requires a fresh server-held instance.
 novelty_risk:
   level: medium
-  rationale: F6 planting and generic Ising methods are published, while the fixed random couplings were
-    freshly generated; now that the instance is public, future use cannot claim contamination resistance.
+  rationale: F6 planting and generic Ising methods are published, while the fixed random couplings were freshly
+    generated; now that the instance is public, future use cannot claim contamination resistance.
 lineage:
   status: complete
   builder_model_ids:
@@ -72,12 +78,15 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: This package builder was controller-routed as gpt-5.6-sol at high effort;
-    that identifier is controller-requested routing metadata, not independently backend-attested. The
-    prototype builder was likewise controller-routed as gpt-6-astra at high effort, then one separate
-    controller-routed gpt-6-astra xhigh static-artifact solver probe returned a valid energy -2572 against
-    the predeclared attainable -2592 target. This package was built afterward without changing the instance
-    or target. The probe is exploratory and is not recorded as formal SLE calibration.
+  edits_triggered_by_model: This package builder was controller-routed as gpt-5.6-sol at high effort; that
+    identifier is controller-requested routing metadata, not independently backend-attested. The prototype
+    builder was likewise controller-routed as gpt-6-astra at high effort, then one separate controller-routed
+    gpt-6-astra xhigh static-artifact solver probe returned a valid energy -2572 against the predeclared attainable
+    -2592 target. This package was built afterward without changing the instance or target. The probe is exploratory
+    and is not recorded as formal SLE calibration. The 2026-09-11 repair introduced a separately written replica-exchange
+    method and fixed greedy/no-exchange/no-quench programs before the ten-call sandbox pilot; no new model
+    draw was used. The observed no-exchange result caused that already frozen program to be added to the shortcut
+    contract; no instance, oracle, normalization, candidate parameter, or margin was changed in response.
   shortcut_discoverer: builder_self_audit_and_bounded_attack_tests
   frozen_before_eval: false
   freeze_timestamp: null
@@ -89,10 +98,10 @@ construction_audit:
   red_team_rounds: 1
   oracle_disagreement_status: no_disagreement_in_public_exact_checks_or_private_fixed_witness_regrade
   independent_recomputation_status: Public code independently enumerates all 256 states of every F6 template
-    and audits the fixed cube partition; a separate H200 host running Python 3.10.12 and standard-library
-    integer arithmetic rehashed and regraded the external private witness at -2592 and the frozen Astra
-    artifact at -2572. This was static-data verification, not candidate-program execution, sandbox certification
-    or scientific review.
+    and audits the fixed cube partition; a separate H200 host running Python 3.10.12 and standard-library integer
+    arithmetic rehashed and regraded the external private witness at -2592 and the frozen Astra artifact at
+    -2572. This was static-data verification, not candidate-program execution, sandbox certification or scientific
+    review.
 long_horizon:
   status: not_tested
   measurement_health_passed: false
@@ -103,11 +112,14 @@ shortcut_probe:
   metric: combined_score
   reference:
     candidate: verification/reference_tempering.py
-    expected_score: null
+    expected_score: 0.9861111111111112
   probes:
   - id: greedy_multistart_256
     candidate: verification/probe_greedy_multistart.py
-    expected_score: null
+    expected_score: 0.7901234567901234
+  - id: independent_temperature_chains
+    candidate: verification/ablation_no_exchange.py
+    expected_score: 0.9845679012345679
   relative_margin: 0.1
   score_tolerance: 1.0e-06
 evaluation_budget:
