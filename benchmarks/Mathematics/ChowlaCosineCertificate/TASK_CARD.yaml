@@ -106,3 +106,7 @@ construction_audit:
   independent_recomputation_status: >-
     70 focused core tests and the reproducible reference diagnostics in references/known_best.md
     independently exercise the exact checker; registration and Linux sandbox gates are separate
+
+evaluation_budget:
+  timeout_seconds: 300
+  scope: Whole candidate execution and trusted verification; shared wrapper default.

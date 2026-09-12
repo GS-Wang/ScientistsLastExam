@@ -63,34 +63,13 @@ nonzero. The submitted rational bound must satisfy `0 < bound <= n_terms`. The r
 `frequencies`, `bound`, and `factors` are all required. A malformed or false certificate scores zero
 for that world and cannot remove it from the aggregate.
 
-## Public score-one Sidon construction
+## Reference boundary
 
-The reference is deliberately reconstructible. Let `B={b_0,...,b_(m-1)}` be integer marks whose
-positive pairwise differences are all distinct, and let
-
-```text
-A = {b_j - b_i : 0 <= i < j < m}.
-```
-
-For these instances `n_terms=m(m-1)/2`. Then
-
-```text
-(1/2) * |sum(b in B) z^b|^2 = m/2 + sum(a in A) cos(a*x).
-```
-
-Thus one legal factor has `weight=[1,2]`, `terms=[[b,1] for b in B]`, and
-`bound=[m,2]`. A simple deterministic builder starts from `B=[0]` and repeatedly appends the
-smallest integer mark for which every new difference is positive, differs from every earlier
-difference, and differs from the other new differences. It gives:
-
-| `n_terms` | marks `B` | exact reference `r` |
-|---:|---|---:|
-| 15 | 0, 1, 3, 7, 12, 20 | 3 |
-| 28 | 0, 1, 3, 7, 12, 20, 30, 44 | 4 |
-| 45 | 0, 1, 3, 7, 12, 20, 30, 44, 65, 80 | 5 |
-
-Check that the last mark fits `max_frequency`; repeated differences do not give unit cosine
-coefficients and are rejected by the exact identity.
+The frozen scale uses a constructive reference, not a proven finite optimum.
+Reference artifacts and historical shortcut measurements are evaluator-side audit
+resources; they are not supplied as a worked solution in this prompt. Published
+constructions remain prior knowledge, so removing the worked example does not
+establish task difficulty or contamination resistance.
 
 ## Scoring and limits
 
@@ -102,11 +81,11 @@ score = max(0, (n_terms - r) / (n_terms - reference_bound)).
 
 The reported `combined_score` is the mean over all three worlds. The baseline uses
 `A={1,...,n_terms}` and one factor `|1+z^a|^2/2` per frequency, proving `r=n_terms` and scoring zero.
-The Sidon construction scores one. The scale is uncapped above one, although each fixed world is
+The frozen constructive reference scores one. The scale is uncapped above one, although each fixed world is
 mathematically bounded because `r>0`.
 
-Score one is cheap and is not a global best-known result. A bounded local spectral search followed
-by exact rational correction already reached aggregate score about 1.0074. A larger score proves a
+Score one is not a global best-known result. Historical shortcut measurements are
+recorded in the evaluator-side audit, and admission remains unresolved. A larger score proves a
 stronger bound for the submitted finite frequency set; it does not prove global optimality, improve
 the best asymptotic exponent, or establish benchmark difficulty.
 

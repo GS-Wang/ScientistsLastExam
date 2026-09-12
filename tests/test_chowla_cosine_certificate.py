@@ -8,7 +8,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-import sympy as sp
 
 
 TASK = Path(__file__).resolve().parents[1] / "benchmarks/Mathematics/ChowlaCosineCertificate"
@@ -37,6 +36,7 @@ def witness():
 
 
 def test_hand_derived_exact_witness_and_symbolic_independence():
+    sp = pytest.importorskip("sympy")
     evaluator = load("verification/evaluator.py")
     assert evaluator.certified_bound(witness(), problem()) == Fraction(9, 8)
     z = sp.Symbol("z", nonzero=True)
@@ -173,6 +173,7 @@ def test_work_and_integer_budgets_are_enforced(budget, value):
 
 
 def test_small_denominators_collectively_exceed_lcm_budget():
+    sp = pytest.importorskip("sympy")
     evaluator = load("verification/evaluator.py")
     limits = problem()
     limits["max_denominator_lcm_bits"] = 8
@@ -205,6 +206,7 @@ def test_raising_and_partial_candidates_keep_all_worlds():
 
 
 def test_sidon_small_example_and_repeated_differences():
+    sp = pytest.importorskip("sympy")
     evaluator = load("verification/evaluator.py")
     reference = load("verification/reference_search.py")
     submission = reference.sidon_certificate(problem(3, 8))
@@ -223,6 +225,29 @@ def test_sidon_small_example_and_repeated_differences():
         reference.sidon_certificate(problem(2, 8))
     with pytest.raises(ValueError):
         reference.sidon_certificate(problem(15, 4))
+
+
+def test_independent_worlds_reset_candidate_session():
+    ev = load("verification/evaluator.py")
+    baseline = load("solution.py").build_certificate
+
+    class StatefulCandidate:
+        def __init__(self):
+            self.ready = False
+            self.calls = 0
+
+        def reset_session(self):
+            self.ready = True
+
+        def __call__(self, problem):
+            assert self.ready, "world inherited an old or uninitialized session"
+            self.ready = False
+            self.calls += 1
+            return baseline(problem)
+
+    candidate = StatefulCandidate()
+    assert ev.evaluate(candidate)["valid"] == 1
+    assert candidate.calls == 3
 
 
 def test_baseline_reference_and_complete_payload_determinism():
@@ -256,6 +281,7 @@ def test_candidate_mutation_cannot_change_world_or_later_evaluations():
 
 
 def test_exact_correction_handles_missing_and_extra_harmonics():
+    sp = pytest.importorskip("sympy")
     evaluator = load("verification/evaluator.py")
     reference = load("verification/reference_search.py")
     # q=1/2+z/2+z^2/2+z^3/4 needs errors -1/8,+1/8,-1/8.

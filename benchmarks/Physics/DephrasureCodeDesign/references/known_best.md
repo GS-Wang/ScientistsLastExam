@@ -74,3 +74,25 @@ timings and their exact environment are in [README.md](README.md); they are not
 candidate optimizer timings or H200 evaluation evidence. External domain and
 evaluator-security review, trusted sandbox runs, formal calibration, and sustained
 headroom measurement remain pending.
+
+## Submission integration update — 2026-09-12
+
+The earlier local measurements above retain their original scope and task version.
+[Maintainer review of head 92f0adb](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/36#issuecomment-5594780661)
+reports real Linux/bubblewrap baseline/reference execution and complete contribution
+checks for the previous package. That is maintainer evidence, not a fresh run by
+this contributor or proof of scientific admission.
+
+This revision removes worked-answer material from the candidate prompt, adopts the
+current shared public-metric wrapper, and resets candidate sessions between worlds
+where applicable. The public problem keys and mathematical targets are unchanged.
+Dephrasure additionally rounds only the headline score to six decimal places;
+raw rates and its excess margin are unchanged. Older model probes must not be
+relabelled as calibration of this revised prompt/protocol.
+
+Admission remains blocked: published-witness reproduction is not a qualified
+truth-blind, capability-complete search reference; removing prompt examples does
+not hide the publications or make them hard. The executable shortcut contract and
+independent calibration still need task-specific scientific work. No reference,
+score window, or acceptance margin was retuned to make an old result pass. External
+scientific review and final maintainer evidence freezing remain outstanding.

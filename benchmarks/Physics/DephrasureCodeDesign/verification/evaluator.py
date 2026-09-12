@@ -145,6 +145,8 @@ def evaluate(candidate_callable):
     """
     rows = []
     for problem in evaluation_problems():
+        if hasattr(candidate_callable, "reset_session"):
+            candidate_callable.reset_session()
         row = dict(n=problem["n"], p=problem["p"], q=problem["q"], valid=False,
                    score=0.0, raw_rate=0.0, single_letter_rate=problem["single_letter_rate"],
                    reference_rate=problem["reference_rate"], reference_excess=0.0,
@@ -163,7 +165,8 @@ def evaluate(candidate_callable):
             pass  # Candidate-controlled exception strings never enter stable JSON.
         rows.append(row)
     count = sum(row["valid"] for row in rows)
-    return dict(combined_score=float(sum(r["score"] for r in rows)/len(rows)),
+    # Quantize only the headline; retain raw rates and the 1e-9 excess guard.
+    return dict(combined_score=round(sum(r["score"] for r in rows)/len(rows), 6),
                 valid=float(count == len(rows)), feasibility_rate=count/len(rows),
                 reference_excess=float(sum(r["margin_qualified_excess"] for r in rows)/len(rows)),
                 per_instance=rows)

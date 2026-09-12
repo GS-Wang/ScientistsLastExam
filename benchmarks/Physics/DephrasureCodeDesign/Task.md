@@ -46,8 +46,9 @@ purifying/reference space.
 | `numerical_margin` | `1e-9` bits/use, used for qualified reference excess |
 
 The initial `solution.py` returns a pure product input. Its coherent information
-is zero and its score is zero. Known reference constructions are public in
-`verification/reference_codes.py` and `references/`; they are legitimate seeds.
+is zero and its score is zero. Published-witness reconstruction is retained in the
+evaluator-side audit, not distributed as a candidate-visible worked solution.
+The publications remain prior knowledge; this is not a contamination-resistance claim.
 
 ## Channel and objective
 
@@ -91,12 +92,12 @@ These four cases were selected after reconstructing eight published MAT
 witnesses, transcribing six old NN witnesses, and recomputing a pointwise
 envelope with tensor products of all selected lower-blocklength witnesses.
 
-| n | p | q | Reference rate | Selected witness |
-|---:|---:|---:|---:|---|
-| 3 | .08 | .4 | 4.789974718208585e-5 | Zhu et al. 2025, R=2 |
-| 4 | .08 | .4 | 7.560948545808554e-5 | Zhu et al. 2025, R=3 |
-| 3 | .32 | .1 | 1.1178287051553156e-4 | Zhu et al. 2025, R=3 |
-| 4 | .32 | .1 | 1.1801746871108513e-4 | Bausch–Leditzky 2020, Table 10 |
+| n | p | q |
+|---:|---:|---:|
+| 3 | .08 | .4 |
+| 4 | .08 | .4 |
+| 3 | .32 | .1 |
+| 4 | .32 | .1 |
 
 The envelope includes optimized weighted repetitions and product closure;
 otherwise, for example, the tensor square of a good 2-qubit code is an obvious
@@ -114,7 +115,10 @@ For a valid candidate rate R, single-letter rate L, and reference rate B:
 \]
 
 One matches the frozen reference. Scores above one are retained; the score is
-not clipped. `combined_score` averages all four cases. Invalid cases contribute
+not clipped. `combined_score` averages all four cases and is rounded to six
+decimal places to prevent last-bit numerical noise from appearing as a record.
+Raw per-case rates and the independent `1e-9` bits/use excess criterion are
+unchanged. A headline score above one alone is not a margin-qualified discovery. Invalid cases contribute
 zero and remain in `per_instance`. The return value of
 `evaluate(candidate_callable)` is finite JSON containing `valid`,
 `feasibility_rate`, and each case's `raw_rate`, `score`, `reference_rate`,

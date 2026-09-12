@@ -57,62 +57,27 @@ and removes a common integer gcd after every projection. The helper rejects depe
 does not guarantee the resulting coordinates satisfy `max_coordinate_bits`; choose precision and
 check the returned integers yourself.
 
-## Public Raynal–Lü–Englert construction
+## Published-reference boundary
 
-The score-one construction is fully public. Let `omega=exp(2*pi*i/3)`,
-`X=diag(conjugate(x),x)`, `Z=diag(1,-1)`,
-
-```text
-F = [[1,1],[1,-1]],
-T = [[1,omega*t^2],[1,-omega*t^2]].
-```
-
-Build the following 3 by 3 arrays of 2 by 2 blocks:
-
-```text
-N1 = [[F,F,F], [F,omega*F,conjugate(omega)*F],
-      [T,conjugate(omega)*T,omega*T]]
-N2 = [[F,F,F], [T,omega*T,conjugate(omega)*T],
-      [T,conjugate(omega)*T,omega*T]]
-N3 = [[F,F,F], [T,omega*T,conjugate(omega)*T],
-      [F,conjugate(omega)*F,omega*F]]
-L1 = diag(X, i*conjugate(omega)*t*Z*conjugate(X)*conjugate(X), X)
-L3 = diag(conjugate(X), conjugate(omega)*conjugate(X), -i*t*Z*X*X)
-(B0,B1,B2,B3) = (I, L1*N1/sqrt(6), N2/sqrt(6), L3*N3/sqrt(6)).
-```
-
-Products in `L1` and `L3` are matrix products. Raynal–Lü–Englert Eqs. (19)–(22) set
-
-```text
-r = cbrt(21*sqrt(3)-36)
-s = (3 + 16*r - r^2)/(28*r)
-x = exp(i*asin(sqrt(s)))
-t = exp(i*(acos((1-2*s)/sqrt(s)) - pi/3))
-ASD_R = (71 - 12*(1-s)^2)/70.
-```
-
-Construct the three numerical explicit bases, convert each with
-`numerical_to_integer_rays(Bk, bits=32)`, and return those three integer matrices. This inexpensive
-route reconstructs the fixed score-one fixture; increasing the conversion precision can slightly
-exceed that rational fixture without beating the algebraic construction.
+The normalization uses an exactly orthogonalized rational reconstruction of the
+Raynal–Lü–Englert construction (Phys. Rev. A 83, 062303, 2011,
+https://doi.org/10.1103/PhysRevA.83.062303). Its executable reconstruction and
+stored witness belong to the evaluator-side audit, not the candidate-visible
+worked example. Published knowledge may still reconstruct the reference cheaply;
+this task does not claim contamination resistance or qualified model difficulty.
 
 ## Scoring and the actual frontier flag
 
 `combined_score = ASD / ASD_fixed_fixture` and is not clipped. The baseline returns three identity
 matrices and scores zero. The immutable 32-bit rounded and exactly orthogonalized Raynal fixture
-defines score one, with
-
-```text
-ASD_fixed_fixture = 0.998291692700123872383322928599388780...
-```
+defines score one.
 
 The evaluator separately reports `beyond_rational_fixture`. That flag can be reached merely by
 requantizing the public equations. The scientifically stronger
 `beyond_published_reference` flag requires the exact submitted ASD to exceed a rigorous rational
 upper bound on the algebraic `ASD_R`; `frontier_excess_lower_bound` reports the certified excess.
-A 36-bit reconstruction beats the fixture but remains below that upper bound by about
-`6.34e-23`. No tested numerical search passed the stronger flag, and the Raynal paper does not
-prove its construction globally optimal.
+Requantization improvements are not advances over the published construction.
+The Raynal paper does not prove its construction globally optimal.
 
 ## Representation boundary and neighboring tasks
 

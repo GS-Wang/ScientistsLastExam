@@ -133,3 +133,25 @@ for problem in evaluator.evaluation_problems():
 The local complete score payloads repeated exactly. Floating-point search paths
 may differ across numerical-library/platform versions; the rational certificate
 itself has platform-independent mathematical meaning and is always rechecked.
+
+## Submission integration update — 2026-09-12
+
+The earlier local measurements above retain their original scope and task version.
+[Maintainer review of head 92f0adb](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/36#issuecomment-5594780661)
+reports real Linux/bubblewrap baseline/reference execution and complete contribution
+checks for the previous package. That is maintainer evidence, not a fresh run by
+this contributor or proof of scientific admission.
+
+This revision removes worked-answer material from the candidate prompt, adopts the
+current shared public-metric wrapper, and resets candidate sessions between worlds
+where applicable. The public problem keys and mathematical targets are unchanged.
+Dephrasure additionally rounds only the headline score to six decimal places;
+raw rates and its excess margin are unchanged. Older model probes must not be
+relabelled as calibration of this revised prompt/protocol.
+
+Admission remains blocked: published-witness reproduction is not a qualified
+truth-blind, capability-complete search reference; removing prompt examples does
+not hide the publications or make them hard. The executable shortcut contract and
+independent calibration still need task-specific scientific work. No reference,
+score window, or acceptance margin was retuned to make an old result pass. External
+scientific review and final maintainer evidence freezing remain outstanding.

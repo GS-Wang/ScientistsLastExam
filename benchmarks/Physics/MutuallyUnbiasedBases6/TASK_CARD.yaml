@@ -113,3 +113,7 @@ construction_audit:
   independent_recomputation_status: >-
     33 focused core tests and the deterministic fixture check in references/known_best.md reproduce
     the metric and reference; registration and Linux sandbox gates are separate
+
+evaluation_budget:
+  timeout_seconds: 300
+  scope: Whole candidate execution and trusted verification; shared wrapper default.

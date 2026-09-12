@@ -192,3 +192,39 @@ def test_hash_gate_prevents_parsing_modified_mat_resources(monkeypatch):
     monkeypatch.setitem(ref.MAT_HASHES, name, "0"*64)
     with pytest.raises(ValueError):
         ref.published_mat_factor(name)
+
+
+@pytest.mark.parametrize("score_delta", [-3e-12, 3e-12, 2e-6])
+def test_headline_score_quantizes_roundoff_without_clipping(ev, monkeypatch, score_delta):
+    ref = load("verification/reference_codes.py")
+    problem = ev.evaluation_problems()[0]
+    baseline, reference = problem["single_letter_rate"], problem["reference_rate"]
+    rate = baseline + (1 + score_delta) * (reference - baseline)
+    monkeypatch.setattr(ev, "evaluation_problems", lambda: [problem])
+    # Isolate aggregation from BLAS-dependent last-bit entropy noise.
+    monkeypatch.setattr(ev, "coherent_information", lambda *_: rate * problem["n"])
+    result = ev.evaluate(ref.design_reference)
+    assert result["combined_score"] == round(1 + score_delta, 6)
+    assert result["per_instance"][0]["raw_rate"] == (rate * problem["n"]) / problem["n"]
+
+
+def test_independent_worlds_reset_candidate_session(ev):
+    baseline = load("solution.py").design_code
+
+    class StatefulCandidate:
+        def __init__(self):
+            self.ready = False
+            self.calls = 0
+
+        def reset_session(self):
+            self.ready = True
+
+        def __call__(self, problem):
+            assert self.ready, "world inherited an old or uninitialized session"
+            self.ready = False
+            self.calls += 1
+            return baseline(problem)
+
+    candidate = StatefulCandidate()
+    assert ev.evaluate(candidate)["valid"] == 1
+    assert candidate.calls == 4

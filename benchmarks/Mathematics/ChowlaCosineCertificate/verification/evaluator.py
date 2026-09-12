@@ -131,6 +131,8 @@ def evaluate(candidate_callable):
     """Score all frozen worlds; failures contribute zero, never disappear."""
     rows = []
     for problem in evaluation_problems():
+        if hasattr(candidate_callable, "reset_session"):
+            candidate_callable.reset_session()
         n = problem["n_terms"]
         reference = Fraction(*problem["reference_bound"])
         row = dict(n_terms=n, max_frequency=problem["max_frequency"], valid=False,

@@ -8,7 +8,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-import sympy as sp
 
 
 TASK = Path(__file__).resolve().parents[1] / "benchmarks/Physics/MutuallyUnbiasedBases6"
@@ -93,6 +92,7 @@ def test_candidate_failure_is_deterministic_and_problem_mutation_is_harmless():
 
 
 def test_public_gram_schmidt_is_exact_and_rejects_dependence():
+    sp = pytest.importorskip("sympy")
     public = load("solution.py")
     ev = load("verification/evaluator.py")
     a = [[[1, 1], [2, 0]], [[0, 1], [1, -1]]]
@@ -128,6 +128,7 @@ def test_numerical_conversion_rejects_nonfinite_and_rank_loss():
 
 
 def test_interval_against_independent_high_precision_algebraic_expression():
+    sp = pytest.importorskip("sympy")
     ev = load("verification/evaluator.py")
     lower, upper = ev.published_asd_interval()
     r = sp.real_root(21 * sp.sqrt(3) - 36, 3)
@@ -172,6 +173,7 @@ def test_reference_constructor_matches_equations_and_fixture():
 
 
 def test_raw_fixture_orthogonality_and_probability_marginals():
+    sp = pytest.importorskip("sympy")
     ev = load("verification/evaluator.py")
     bases = [identity()] + json.loads((TASK / "references/raynal_rays.json").read_text())["bases"]
     for basis in bases:

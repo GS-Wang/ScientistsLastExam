@@ -46,7 +46,11 @@ def test_expansion_exposes_contract_and_records_uncalibrated_lineage(task_id):
     assert (spec.task_dir / "references/known_best.md").is_file()
 
 
-@pytest.mark.parametrize("task_id", EXPECTED_CANDIDATES)
+@pytest.mark.parametrize("task_id", [
+    "Mathematics/ChowlaCosineCertificate",
+    "QuantumFoundations/MutuallyUnbiasedBases6",
+    "QuantumFoundations/DephrasureCodeDesign",
+])
 @pytest.mark.parametrize("worker_success", [True, False])
 def test_expansion_wrapper_delegates_and_fails_closed(task_id, worker_success, tmp_path, monkeypatch):
     """A failed trusted subprocess must not trigger any in-process candidate fallback."""
@@ -58,10 +62,13 @@ def test_expansion_wrapper_delegates_and_fails_closed(task_id, worker_success, t
     candidate = tmp_path / "candidate.py"
     candidate.write_text(f"from pathlib import Path\nPath({str(marker)!r}).touch()\n")
     metrics = tmp_path / "metrics.json"
+    metrics.write_text('{"combined_score": 999, "valid": 1}')
     calls = []
 
     def trusted_process(command, **kwargs):
         calls.append((command, kwargs))
+        if worker_success:
+            metrics.write_text(json.dumps({"combined_score": 1.25, "valid": 1.0}))
         return SimpleNamespace(
             returncode=0 if worker_success else 1,
             stdout=json.dumps({"combined_score": 1.25, "valid": 1.0}),
@@ -70,13 +77,15 @@ def test_expansion_wrapper_delegates_and_fails_closed(task_id, worker_success, t
 
     monkeypatch.setattr(wrapper.subprocess, "run", trusted_process)
     monkeypatch.setattr(sys, "argv", ["run_eval.py", "--candidate", str(candidate), "--metrics-out", str(metrics)])
-    assert wrapper.main() == 0
+    assert wrapper.main() == (0 if worker_success else 2)
     assert len(calls) == 1
     command, kwargs = calls[0]
-    assert command[:7] == [sys.executable, "-m", "sle", "eval", "--task", task_id, "--allow-uncertified"]
-    assert command[command.index("--candidate") + 1] == str(candidate.resolve())
-    assert kwargs["cwd"] == str(wrapper.ROOT)
+    assert command[:6] == [sys.executable, str(wrapper.ROOT / "sle/frontier_eval_entrypoint.py"),
+                          "--task", task_id, "--root", str(wrapper.ROOT)]
+    assert command[command.index("--candidate") + 1] == str(candidate)
+    assert command[command.index("--timeout") + 1] == "300"
     assert not marker.exists()
-    result = json.loads(metrics.read_text())
-    assert result["combined_score"] == (1.25 if worker_success else -1e18)
-    assert result["valid"] == (1.0 if worker_success else 0.0)
+    if worker_success:
+        assert json.loads(metrics.read_text()) == {"combined_score": 1.25, "valid": 1.0}
+    else:
+        assert not metrics.exists(), "infrastructure failure must remove stale scores"

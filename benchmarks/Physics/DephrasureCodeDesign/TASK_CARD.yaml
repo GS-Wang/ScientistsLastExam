@@ -22,7 +22,8 @@ normalization:
     published 2020/2025 witnesses, optimized weighted repetitions and finite-library product closure;
     references/verified_reference.json records the audit, not an exhaustive current global record
   score: >-
-    mean of max(0,(R-L)/(B-L)) across all four worlds, retained above one, with R in bits/use,
+    mean of max(0,(R-L)/(B-L)) across all four worlds, headline rounded to six decimal
+    places and retained above one, with unrounded R in bits/use,
     L the optimized single-letter rate and B the witness envelope; a separate 1e-9 bits/use margin
     qualifies reference excess and is an engineering tolerance, not an interval certificate
 citations:
@@ -114,3 +115,7 @@ construction_audit:
     tests/test_dephrasure_code_design.py covers channel limits, random-state dual-oracle agreement,
     repetition formulas, product additivity, reference reconstruction and hostile artifact bounds;
     references/verified_reference.json stores witness-by-witness rates and numerical discrepancies
+
+evaluation_budget:
+  timeout_seconds: 300
+  scope: Whole candidate execution and trusted verification; shared wrapper default.
