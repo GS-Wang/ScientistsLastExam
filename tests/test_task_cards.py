@@ -17,6 +17,7 @@ RECORDED_LINEAGE = {
     "Physics/F6SpinGlassGroundState",
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
+    "ComputerArchitecture/CacheReplacementPolicyID",
     "MaterialsScience/PhaseDiagramDiscovery",
     "Physics/HiddenCouplingNetwork",
     "ClimateScience/ForcedSignalAttribution",
