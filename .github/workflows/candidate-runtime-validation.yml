@@ -1,0 +1,104 @@
+name: SLE candidate runtime validation (not admission)
+on:
+  push:
+    branches: [codex/sle-pr-validation-20260912]
+permissions:
+  contents: read
+jobs:
+  runtime:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - pr: 36
+            ref: ad4ee02bb3e135c7b2a4e9db0b295e58db494a2d
+          - pr: 47
+            ref: 6879c80f7d96b21ef05891020411bbba98fbec90
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      SLE_REQUIRE_FROZEN_INVENTORY: '0'
+      REVIEW_PR: ${{ matrix.pr }}
+      EXPECTED_SHA: ${{ matrix.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: GS-Wang/ScientistsLastExam
+          ref: ${{ matrix.ref }}
+          fetch-depth: 0
+      - name: Check immutable source and original sandbox
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test -z "$(git status --porcelain)"
+          sudo apt-get update -q
+          sudo apt-get install -y -q bubblewrap util-linux python3-pip
+          bwrap --unshare-all --die-with-parent --ro-bind /usr /usr --ro-bind /lib /lib \
+            --ro-bind /lib64 /lib64 --proc /proc --dev /dev -- /usr/bin/true
+      - name: Install the current upstream runtime pins
+        run: |
+          sudo /usr/bin/python3 -m pip install --upgrade pip
+          sudo /usr/bin/python3 -m pip install \
+            "numpy==1.24.4" "scipy==1.10.1" "pyyaml==6.0.2" pytest \
+            "nmrsim==0.6.0" "qutip==4.7.6" "networkx==3.1" "sympy==1.13.3" \
+            "mpmath==1.3.0" "sparse==0.15.5" "numba==0.58.1" "llvmlite==0.41.1" \
+            "matplotlib==3.7.5" "packaging==26.2" "contourpy==1.1.1" "cycler==0.12.1" \
+            "numpy-groupies==0.9.22" "importlib-metadata==8.5.0" \
+            "typing-extensions==4.12.2" "zipp==3.20.2" \
+            "fonttools==4.57.0" "kiwisolver==1.4.7" "pillow==10.4.0" "pyparsing==3.1.4" \
+            "python-dateutil==2.9.0.post0" "six==1.17.0"
+      - name: Focused science, attack and integration tests
+        run: |
+          common=(tests/test_secure_eval.py tests/test_frontier_eval_entrypoint.py tests/test_gen_task_template.py tests/test_task_cards.py tests/test_task_inventory_document.py tests/test_readme_inventory_counts.py)
+          if [ "$REVIEW_PR" = 36 ]; then
+            specific=(tests/test_chowla_cosine_certificate.py tests/test_mutually_unbiased_bases6.py tests/test_dephrasure_code_design.py tests/test_chowla_mub_registration.py tests/test_expansion_registration.py tests/test_math_quantum_submission_sandbox.py)
+          else
+            specific=(tests/test_f6_spin_glass_ground_state.py)
+          fi
+          /usr/bin/python3 -m pytest "${common[@]}" "${specific[@]}" -q -p no:cacheprovider --junitxml="$RUNNER_TEMP/tests.xml"
+      - name: Complete contribution check with explicit scientific failure boundary
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import json, os, subprocess, sys
+          from pathlib import Path
+          pr = int(os.environ['REVIEW_PR'])
+          tasks = (['Mathematics/ChowlaCosineCertificate', 'QuantumFoundations/MutuallyUnbiasedBases6',
+                    'QuantumFoundations/DephrasureCodeDesign'] if pr == 36 else ['Physics/F6SpinGlassGroundState'])
+          records = []
+          for task in tasks:
+              output = Path(os.environ['RUNNER_TEMP']) / (task.split('/')[-1] + '.json')
+              done = subprocess.run([sys.executable, 'scripts/check_task_contribution.py', '--task', task,
+                                     '--timeout', '600', '--output', str(output)], capture_output=True, text=True)
+              if not output.is_file():
+                  raise RuntimeError('Contribution check produced no report: ' + task)
+              report = json.loads(output.read_text())
+              record = {'task': task, 'source_revision': os.environ['EXPECTED_SHA'],
+                        'exit_code': done.returncode, 'phases': report['phases'],
+                        'scientific_admission': report['scientific_admission'],
+                        'baseline_score': report['baseline_combined_score']}
+              records.append(record)
+              print(json.dumps(record, sort_keys=True))
+              assert report['phases']['structural'] == 'passed', record
+              assert report['phases']['runtime'] == 'passed', record
+              assert report['baseline_combined_score'] == 0, record
+              assert done.returncode in (1, 2), record
+              assert report['phases']['shortcut_guard'] in ('failed', 'incomplete'), record
+          summary = {'scope': 'targeted runtime validation only; NOT a passing admission gate', 'results': records}
+          (Path(os.environ['RUNNER_TEMP']) / 'runtime-summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('Runtime checks only. Scientific admission remains blocked. No model calls or private witnesses used.\n\n```json\n')
+              f.write(json.dumps(summary, indent=2) + '\n```\n')
+          PY
+      - name: Preserve only test results and public phase summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-${{ matrix.pr }}-runtime-validation
+          path: |
+            ${{ runner.temp }}/tests.xml
+            ${{ runner.temp }}/runtime-summary.json
+          if-no-files-found: error
